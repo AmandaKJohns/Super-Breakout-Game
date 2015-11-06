@@ -12,3 +12,4 @@ java_import org.newdawn.slick.Image
 java_import org.newdawn.slick.Input
 java_import org.newdawn.slick.SlickException
 java_import org.newdawn.slick.AppGameContainer
+java_import javax.swing.JOptionPane

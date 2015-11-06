@@ -7,7 +7,7 @@ class Block
   def_delegators :@image, :width, :height
   def_delegators :game, :ball
 
-  X_ARRAY = [100,200,300,400,500]
+  X_ARRAY = [25,100,175,250,325,400,475,550]
 
   ALL_BLOCKS = []
 
@@ -32,7 +32,6 @@ class Block
   end
 
     def update(container, delta)
-      
     if  ball.x >= @x && 
         ball.x <= (@x + width) && 
         ball.y >= @y && 
@@ -41,7 +40,6 @@ class Block
           @x = 800
           @y = 800
     end
-
   end
 
 end

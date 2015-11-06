@@ -4,7 +4,7 @@ require './models/block'
 
 class PongGame < BasicGame
 
-  attr_reader :ball, :paddle
+  attr_reader :ball, :paddle, :lives
 
   def render(container, graphics)
     @bg.draw(0, 0)
@@ -13,6 +13,7 @@ class PongGame < BasicGame
     # @block.render(container,graphics)
     Block.all.each {|block| block.render(container, graphics)}
     graphics.draw_string('RubyPong (ESC to exit)', 8, container.height - 30)
+    graphics.draw_string("Lives: #{self.lives}", 550, container.height - 30)
   end
 
   def init(container)
@@ -20,9 +21,10 @@ class PongGame < BasicGame
     @ball = Ball.new(self)
     @paddle = Paddle.new(self)
     # @block = Block.new(self)
-    5.times do 
+    8.times do 
       Block.new(self)
     end
+    @lives = 3
   end
 
   def update(container, delta)
@@ -36,8 +38,13 @@ class PongGame < BasicGame
   end
 
   def reset
+    @lives -= 1
+    if @lives == -1
+      JOptionPane.show_message_dialog(nil, "Game Over")
+      # container.exit
+    end
     @ball.reset
-    @paddle.reset
+    # @paddle.reset
   end
 
 end
