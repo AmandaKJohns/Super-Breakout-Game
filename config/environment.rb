@@ -3,6 +3,7 @@ $:.push File.expand_path('../../lib', __FILE__)
 require 'java'
 require 'lwjgl.jar'
 require 'slick.jar'
+require 'forwardable'
 
 java_import org.newdawn.slick.BasicGame
 java_import org.newdawn.slick.GameContainer
