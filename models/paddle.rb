@@ -2,7 +2,7 @@ require "forwardable"
 
 class Paddle
   extend Forwardable
-  attr_accessor :game, :x, :y
+  attr_accessor :x, :y
 
   def_delegators :@image, :width, :height
 
@@ -18,6 +18,19 @@ class Paddle
 
   def reset
     @x = 200
+    @y = 400
+  end
+
+  def update(container, delta)
+    input = container.get_input
+
+    if input.is_key_down(Input::KEY_LEFT) and @x > 0
+      @x -= 0.4 * delta
+    end
+
+    if input.is_key_down(Input::KEY_RIGHT) and @x < container.width - width
+      @x += 0.4 * delta
+    end
   end
 
 end
