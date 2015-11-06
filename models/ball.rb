@@ -24,6 +24,11 @@ class Ball
     @angle = 45
   end
 
+  def angle_change
+    # @angle = (@angle + 0.5 + rand(0.2) - 0.1) % 2
+    @angle = (@angle + 90) % 360
+  end
+
   def update(container, delta)
     # @x += 0.3 * delta * Math.cos(@angle * Math::PI)
     # @y -= 0.3 * delta * Math.sin(@angle * Math::PI)
@@ -42,8 +47,7 @@ class Ball
     if  @y + height > paddle.y &&
         @x < paddle.x + paddle.width &&
         @x + width > paddle.x
-      # @angle = (@angle + 0.5 + rand(0.2) - 0.1) % 2
-      @angle = (@angle + 90) % 360
+      angle_change
     end
   end
 

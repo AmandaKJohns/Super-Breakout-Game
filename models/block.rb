@@ -7,10 +7,19 @@ class Block
   def_delegators :@image, :width, :height
   def_delegators :game, :ball
 
+  X_ARRAY = [100,200,300,400,500]
+
+  ALL_BLOCKS = []
+
   def initialize(game)
     @image = Image.new('./assets/images/block.png')
     @game = game
     reset
+    ALL_BLOCKS << self
+  end
+
+  def self.all
+    ALL_BLOCKS
   end
 
   def render(container, graphics)
@@ -18,16 +27,17 @@ class Block
   end
 
   def reset
-    @x = 200
+    @x = X_ARRAY.pop
     @y = 100
   end
 
     def update(container, delta)
+      
     if  ball.x >= @x && 
         ball.x <= (@x + width) && 
         ball.y >= @y && 
         ball.y <= (@y + height)
-          ball.angle = (ball.angle + 90) % 360
+          ball.angle_change
           @x = 800
           @y = 800
     end
