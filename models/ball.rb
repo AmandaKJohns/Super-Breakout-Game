@@ -49,6 +49,7 @@ class Ball
       # @angle = (@angle + 0.5 + rand(0.2) - 0.1) % 2  
       angle_change
     end
+    
   end
 
 end
