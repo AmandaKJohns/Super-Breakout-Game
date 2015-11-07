@@ -2,24 +2,32 @@ require "forwardable"
 
 class Ball
   extend Forwardable
-  attr_accessor :x, :y, :angle, :game
+  attr_accessor :x, :y, :angle, :game, :speed
 
   def_delegators :@image, :width, :height
   def_delegators :game, :paddle
+
+  ALL_BALLS = []
 
   def initialize(game)
     @image = Image.new('./assets/images/ball.png')
     @game = game
     reset
+    ALL_BALLS << self
   end
 
   def render(container, graphics)
     @image.draw(@x, @y)
   end
 
+  def self.all
+    ALL_BALLS
+  end
+
   def reset
     @x = 200
     @y = 200
+    @speed = 0.4
     # @angle = 0.25
     @angle = 45
   end
@@ -31,15 +39,17 @@ class Ball
   def update(container, delta)
     # @x += 0.3 * delta * Math.cos(@angle * Math::PI)
     # @y -= 0.3 * delta * Math.sin(@angle * Math::PI)
-    @x += 0.4 * delta * Math.cos(@angle * Math::PI / 180)
-    @y -= 0.4 * delta * Math.sin(@angle * Math::PI / 180)
+    @x += @speed * delta * Math.cos(@angle * Math::PI / 180)
+    @y -= @speed * delta * Math.sin(@angle * Math::PI / 180)
 
     if (@x > container.width - width) || (@y < 0) || (@x < 0)
       # @angle = (@angle + 0.5) % 2
       angle_change
     end
 
-    if @y > container.height
+    if @y > container.height && self.class.all.count > 1
+      self.class.all.pop
+    elsif @y > container.height && self.class.all.count == 1
       game.reset
     end
 
@@ -49,7 +59,7 @@ class Ball
       # @angle = (@angle + 0.5 + rand(0.2) - 0.1) % 2  
       angle_change
     end
-    
+
   end
 
 end

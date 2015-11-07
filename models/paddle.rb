@@ -2,13 +2,15 @@ require "forwardable"
 
 class Paddle
   extend Forwardable
-  attr_accessor :x, :y, :speed
+  attr_accessor :x, :y, :speed, :key_left, :key_right
 
   def_delegators :@image, :width, :height
 
   def initialize(game)
     @image = Image.new('./assets/images/paddle.png')
     @game = game
+    @key_left = Input::KEY_LEFT
+    @key_right = Input::KEY_RIGHT
     @x = 200
     reset
   end
@@ -25,11 +27,11 @@ class Paddle
   def update(container, delta)
     input = container.get_input
 
-    if input.is_key_down(Input::KEY_LEFT) and @x > 0
+    if input.is_key_down(key_left) and @x > 0
       @x -= speed * delta
     end
 
-    if input.is_key_down(Input::KEY_RIGHT) and @x < container.width - width
+    if input.is_key_down(key_right) and @x < container.width - width
       @x += speed * delta
     end
   end

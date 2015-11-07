@@ -31,7 +31,7 @@ class Block
     @y = 100
   end
 
-    def update(container, delta)
+  def update(container, delta)
     if  ball.x >= @x && 
         ball.x <= (@x + width) && 
         ball.y >= @y && 
