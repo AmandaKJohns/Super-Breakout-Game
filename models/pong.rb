@@ -7,6 +7,7 @@ require './models/bullet'
 class PongGame < BasicGame
 
   attr_reader :ball, :paddle, :lives, :item
+  attr_accessor :message
 
   def render(container, graphics)
     @bg.draw(0, 0)
@@ -20,6 +21,7 @@ class PongGame < BasicGame
     Bullet.all.each {|bullet| bullet.render(container, graphics)}
     graphics.draw_string('RubyPong (ESC to exit)', 8, container.height - 30)
     graphics.draw_string("Lives: #{self.lives}", 550, container.height - 30)
+    graphics.draw_string("#{message}", 400, container.height - 470)
   end
 
   def init(container)

@@ -25,8 +25,8 @@ class Ball
   end
 
   def reset
-    @x = 200
-    @y = 200
+    @x = 100
+    @y = 400
     @speed = 0.4
     # @angle = 0.25
     @angle = 45

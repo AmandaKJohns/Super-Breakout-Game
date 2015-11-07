@@ -44,17 +44,23 @@ class Item
         @x + width > paddle.x
         @x = 800
         @y = 800   
-        random_item_method
+        item = random_item_method
+        game.message = format_message(item)
         # paddle_switch
         item_generation
         # extra_ball
     end
+  end
 
+  def format_message(item)
+    "Item: " + item.gsub("_", " ") + "!!!"
   end
 
   def random_item_method
-    methods = ["paddle_speed_up", "paddle_speed_down", "ball_slow_down", "ball_speed_up", "extra_ball", "paddle_switch"]
-    self.send(methods.sample)
+    items = ["paddle_speed_up", "paddle_speed_down", "ball_slow_down", "ball_speed_up", "extra_ball", "paddle_switch"]
+    item = items.sample
+    self.send(item)
+    item
   end
 
   def paddle_speed_up
@@ -86,6 +92,10 @@ class Item
 
   def extra_ball
     Ball.new(game)
+  end
+
+  def state_reset
+    #get rid of shooter
   end
 
 end

@@ -9,8 +9,6 @@ class Paddle
   def initialize(game)
     @image = Image.new('./assets/images/paddle.png')
     @game = game
-    @key_left = Input::KEY_LEFT
-    @key_right = Input::KEY_RIGHT
     @x = 200
     reset
   end
@@ -22,6 +20,8 @@ class Paddle
   def reset
     @speed = 0.4
     @y = 400
+    @key_left = Input::KEY_LEFT
+    @key_right = Input::KEY_RIGHT
   end
 
   def update(container, delta)
