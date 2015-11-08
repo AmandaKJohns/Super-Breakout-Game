@@ -6,7 +6,7 @@ class Item
   attr_accessor :x, :y, :game
 
   def_delegators :@image, :width, :height
-  def_delegators :game, :paddle, :ball
+  def_delegators :game, :paddle, :balls
 
   ALL_ITEMS = []
 
@@ -26,9 +26,10 @@ class Item
     ALL_ITEMS
   end
 
-  def item_generation
-    # sleep rand(7..15)
-    self.class.new(@game)
+  def self.item_generation(game)
+    # random = rand(2..4)
+    # sleep(random)
+    Item.new(game)
   end
 
   def reset
@@ -40,16 +41,16 @@ class Item
   def update(container, delta)
     input = container.get_input
     @y += 0.1 * delta * Math.sin(@angle * Math::PI / 180)
-    shooter(input)
-
-    if  (@y + height >= paddle.y) && (@x <= paddle.x + paddle.width) && (@x + width >= paddle.x) && @state
+    
+    if  (@y + height >= paddle.y) && (@x <= paddle.x + paddle.var_width) && (@x + width >= paddle.x) && @state
         self.class.all.delete(self) 
         @state = false
-        # item = random_item_method
-        # game.message = format_message(item)
-        extra_ball
-        item_generation
+        item = random_item_method
+        game.message = format_message(item)
+        Item.item_generation(@game)
     end
+
+    shooter(input)
 
     if @y + height > paddle.y + 50
       @state = false
@@ -57,12 +58,20 @@ class Item
 
   end
 
+  def shooter(input)
+    if input.is_key_pressed(Input::KEY_SPACE)
+      Bullet.new(@game)
+    end
+  end
+
+
   def format_message(item)
     "Item: " + item.gsub("_", " ") + "!!!"
   end
 
   def random_item_method
-    items = ["paddle_speed_up", "paddle_speed_down", "ball_slow_down", "ball_speed_up", "extra_ball", "paddle_switch"]
+    items = ["paddle_speed_up", "paddle_speed_down", "ball_slow_down", "ball_speed_up", "extra_ball", "paddle_switch", "paddle_extend", "paddle_shorten"]
+    # items = ["shooter"]
     item = items.sample
     self.send(item)
     item
@@ -77,11 +86,11 @@ class Item
   end
 
   def ball_slow_down
-    ball.speed /= 2
+    balls.each {|ball| ball.speed /= 2}
   end
 
   def ball_speed_up
-    ball.speed *= 1.5
+    balls.each {|ball| ball.speed *= 1.5}
   end
 
   def paddle_switch
@@ -89,14 +98,26 @@ class Item
     paddle.key_right = Input::KEY_LEFT
   end
 
-  def shooter(input)
-    if input.is_key_down(Input::KEY_SPACE)
-      Bullet.new(@game)
-    end
-  end
+  # def shooter(input)
+  #   if input.is_key_down(Input::KEY_SPACE)
+  #     Bullet.new(@game)
+  #   end
+  # end
 
   def extra_ball
     Ball.new(game)
+  end
+
+  def paddle_extend
+    if paddle.var_width <= 200
+      paddle.var_width *= 1.3
+    end
+  end
+
+  def paddle_shorten
+    if paddle.var_width >= 70
+      paddle.var_width *= 0.7
+    end
   end
 
   def state_reset

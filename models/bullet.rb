@@ -24,7 +24,7 @@ class Bullet
   end
 
   def reset
-    @x = paddle.x + (paddle.width / 2.4)
+    @x = paddle.x + (paddle.var_width / 2.4)
     @y = paddle.y - 15
     @angle = 90
   end

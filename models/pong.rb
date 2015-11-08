@@ -5,17 +5,18 @@ require './models/item'
 require './models/bullet'
 require './models/level'
 
+
 class PongGame < BasicGame
 
-  attr_reader :ball, :paddle, :lives, :item, :level
+  attr_reader :paddle, :lives, :level, :balls
   attr_accessor :message
 
   def render(container, graphics)
     @bg.draw(0, 0)
     @paddle.render(container, graphics)
+    blocks.each {|block| block.render(container, graphics)}
     Ball.all.each {|ball| ball.render(container, graphics)}
     Item.all.each {|item| item.render(container, graphics)}
-    blocks.each {|block| block.render(container, graphics)}
     Bullet.all.each {|bullet| bullet.render(container, graphics)}
     graphics.draw_string('RubyPong (ESC to exit)', 8, container.height - 30)
     graphics.draw_string("Lives: #{self.lives}", 550, container.height - 30)
@@ -24,9 +25,8 @@ class PongGame < BasicGame
 
   def init(container)
     @bg = Image.new('./assets/images/rsz_galaxy.png')
-    Ball.new(self)
+    # Ball.new(self)
     @paddle = Paddle.new(self)
-    @item = Item.new(self)
     @level = Level.new(self)
     @lives = 3
   end
@@ -34,10 +34,10 @@ class PongGame < BasicGame
   def update(container, delta)
     input = container.get_input
     container.exit if input.is_key_down(Input::KEY_ESCAPE)
-    Ball.all.each {|ball| ball.update(container, delta)}
+    balls.each {|ball| ball.update(container, delta)}
     paddle.update(container, delta)
     Bullet.all.each {|bullet| bullet.update(container, delta)}
-    Item.all.each  {|item| item.update(container, delta)}
+    items.each  {|item| item.update(container, delta)}
     blocks.each {|block| block.update(container, delta)}
   end
 
@@ -47,11 +47,20 @@ class PongGame < BasicGame
       game_over(container)
     end
     Ball.new(self)
+    self.message = ""
     @paddle.reset
   end
 
   def blocks
     @level.blocks
+  end
+
+  def balls
+    Ball.all
+  end
+
+  def items
+    Item.all
   end
 
   def game_over(container)

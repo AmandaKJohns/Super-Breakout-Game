@@ -26,8 +26,7 @@ class Block
           ball.y + ball.height >= @y && 
           ball.y <= (@y + height)
             ball.angle_change
-            @x = 800
-            @y = 800
+            level.blocks.delete(self)
       end
     end
   end

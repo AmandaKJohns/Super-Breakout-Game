@@ -4,17 +4,20 @@ class Level
 
   extend Forwardable
   attr_accessor :game, :blocks
+  attr_reader :shooter
   def_delegator :game, :ball
 
   def initialize(game)
     @game = game
-    # Ball.new(game)
+    Ball.new(game)
     block_create_one(50)
     block_create_two(75)
     block_create_one(100)
     block_create_two(125)
     block_create_one(150)
+    Item.new(game)
   end
+
 
   def block_create_one(y)
     x_array = [25,75,125,175,225,275,325,375,425,475,525]
@@ -36,6 +39,10 @@ class Level
 
   def blocks
     @blocks ||= []
+  end
+
+  def update(container, delta)
+    Thread.new{Item.item_generation(@game)}
   end
 
 end

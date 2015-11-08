@@ -2,7 +2,7 @@ require "forwardable"
 
 class Paddle
   extend Forwardable
-  attr_accessor :x, :y, :speed, :key_left, :key_right
+  attr_accessor :x, :y, :speed, :key_left, :key_right, :var_width
 
   def_delegators :@image, :width, :height
 
@@ -10,14 +10,16 @@ class Paddle
     @image = Image.new('./assets/images/paddle.png')
     @game = game
     @x = 200
+    @var_width = width
     reset
   end
 
   def render(container, graphics)
-    @image.draw(@x, 400)
+    @image.draw(@x, 400, var_width, height)
   end
 
   def reset
+    @var_width = width
     @speed = 0.4
     @y = 400
     @key_left = Input::KEY_LEFT
