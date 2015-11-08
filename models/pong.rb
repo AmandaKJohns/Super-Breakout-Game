@@ -29,6 +29,7 @@ class PongGame < BasicGame
     @paddle = Paddle.new(self)
     @level = Level.new(self)
     @lives = 3
+    @delta = 0
   end
 
   def update(container, delta)
@@ -39,6 +40,15 @@ class PongGame < BasicGame
     Bullet.all.each {|bullet| bullet.update(container, delta)}
     items.each  {|item| item.update(container, delta)}
     blocks.each {|block| block.update(container, delta)}
+    # if delta.to_i % 18 == 0
+    #   Item.new(self)
+    # end
+    @delta = @delta + delta
+    if @delta >= 7000
+      Item.new(self)
+      @delta = 0
+    end
+
   end
 
   def reset(container)

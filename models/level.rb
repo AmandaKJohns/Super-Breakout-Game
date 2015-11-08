@@ -15,7 +15,7 @@ class Level
     block_create_one(100)
     block_create_two(125)
     block_create_one(150)
-    Item.new(game)
+    # Item.new(game)
   end
 
 
@@ -39,10 +39,6 @@ class Level
 
   def blocks
     @blocks ||= []
-  end
-
-  def update(container, delta)
-    Thread.new{Item.item_generation(@game)}
   end
 
 end

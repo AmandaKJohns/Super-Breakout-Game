@@ -47,7 +47,7 @@ class Item
         @state = false
         item = random_item_method
         game.message = format_message(item)
-        Item.item_generation(@game)
+        # Item.item_generation(@game)
     end
 
     shooter(input)
@@ -94,8 +94,13 @@ class Item
   end
 
   def paddle_switch
-    paddle.key_left = Input::KEY_RIGHT
-    paddle.key_right = Input::KEY_LEFT
+    if paddle.key_left == Input::KEY_LEFT
+      paddle.key_left = Input::KEY_RIGHT
+      paddle.key_right = Input::KEY_LEFT
+    else
+      paddle.key_left = Input::KEY_LEFT
+      paddle.key_right =Input::KEY_RIGHT
+    end
   end
 
   # def shooter(input)
