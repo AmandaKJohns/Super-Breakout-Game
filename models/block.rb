@@ -20,13 +20,15 @@ class Block
 
   #second ball not hitting the blocks
   def update(container, delta)
-    if  ball.x >= @x && 
-        ball.x <= (@x + width) && 
-        ball.y >= @y && 
-        ball.y <= (@y + height)
-          ball.angle_change
-          @x = 800
-          @y = 800
+    Ball.all.each do |ball|
+      if  ball.x + ball.width >= @x && 
+          ball.x <= (@x + width) && 
+          ball.y + ball.height >= @y && 
+          ball.y <= (@y + height)
+            ball.angle_change
+            @x = 800
+            @y = 800
+      end
     end
   end
 

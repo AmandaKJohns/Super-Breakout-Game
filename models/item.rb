@@ -2,6 +2,7 @@ require "forwardable"
 
 class Item
   extend Forwardable
+  attr_reader :state
   attr_accessor :x, :y, :game
 
   def_delegators :@image, :width, :height
@@ -12,6 +13,7 @@ class Item
   def initialize(game)
     @image = Image.new('./assets/images/mushroom.gif')
     @game = game
+    @state = true
     reset
     ALL_ITEMS << self
   end
@@ -39,17 +41,20 @@ class Item
     input = container.get_input
     @y += 0.1 * delta * Math.sin(@angle * Math::PI / 180)
     shooter(input)
-    if  @y + height > paddle.y &&
-        @x < paddle.x + paddle.width &&
-        @x + width > paddle.x
-        @x = 800
-        @y = 800   
-        item = random_item_method
-        game.message = format_message(item)
-        # paddle_switch
+
+    if  (@y + height >= paddle.y) && (@x <= paddle.x + paddle.width) && (@x + width >= paddle.x) && @state
+        self.class.all.delete(self) 
+        @state = false
+        # item = random_item_method
+        # game.message = format_message(item)
+        extra_ball
         item_generation
-        # extra_ball
     end
+
+    if @y + height > paddle.y + 50
+      @state = false
+    end
+
   end
 
   def format_message(item)

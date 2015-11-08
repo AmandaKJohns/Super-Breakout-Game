@@ -24,7 +24,7 @@ class PongGame < BasicGame
 
   def init(container)
     @bg = Image.new('./assets/images/rsz_galaxy.png')
-    @ball = Ball.new(self)
+    Ball.new(self)
     @paddle = Paddle.new(self)
     @item = Item.new(self)
     @level = Level.new(self)
@@ -41,12 +41,12 @@ class PongGame < BasicGame
     blocks.each {|block| block.update(container, delta)}
   end
 
-  def reset
+  def reset(container)
     @lives -= 1
     if @lives == 0
-      game_over
+      game_over(container)
     end
-    @ball.reset
+    Ball.new(self)
     @paddle.reset
   end
 
@@ -54,7 +54,7 @@ class PongGame < BasicGame
     @level.blocks
   end
 
-  def game_over
+  def game_over(container)
     JOptionPane.show_message_dialog(nil, "Game Over")
     container.exit
   end

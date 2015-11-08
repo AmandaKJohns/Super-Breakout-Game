@@ -8,7 +8,7 @@ class Level
 
   def initialize(game)
     @game = game
-    # should shovel block into levels blocks at block initialize, refactor later
+    # Ball.new(game)
     block_create_one(50)
     block_create_two(75)
     block_create_one(100)

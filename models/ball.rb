@@ -28,36 +28,38 @@ class Ball
     @x = 100
     @y = 400
     @speed = 0.4
-    # @angle = 0.25
-    @angle = 45
+    @angle = 0.25
+    # @angle = 45
   end
 
   def angle_change
-    @angle = (@angle + 90) % 360
+    @angle = (@angle + 0.5) % 2
+    # @angle = (@angle + 90) % 360
   end
 
   def update(container, delta)
-    # @x += 0.3 * delta * Math.cos(@angle * Math::PI)
-    # @y -= 0.3 * delta * Math.sin(@angle * Math::PI)
-    @x += @speed * delta * Math.cos(@angle * Math::PI / 180)
-    @y -= @speed * delta * Math.sin(@angle * Math::PI / 180)
+    @x += @speed * delta * Math.cos(@angle * Math::PI)
+    @y -= @speed * delta * Math.sin(@angle * Math::PI)
+    # @x += @speed * delta * Math.cos(@angle * Math::PI / 180)
+    # @y -= @speed * delta * Math.sin(@angle * Math::PI / 180)
 
-    if (@x > container.width - width) || (@y < 0) || (@x < 0)
+    if (@x >= container.width - width) || (@y <= 0) || (@x <= 0)
       # @angle = (@angle + 0.5) % 2
       angle_change
     end
 
     if @y > container.height && self.class.all.count > 1
-      self.class.all.pop
+      self.class.all.delete(self)
     elsif @y > container.height && self.class.all.count == 1
-      game.reset
+      game.reset(container)
     end
 
-    if  @y + height > paddle.y &&
-        @x < paddle.x + paddle.width &&
-        @x + width > paddle.x
+    if  ((@y + height >= paddle.y) ||
+        (@y + height >= paddle.y + paddle.height)) &&
+        @x <= paddle.x + paddle.width &&
+        @x + width >= paddle.x
       # @angle = (@angle + 0.5 + rand(0.2) - 0.1) % 2  
-      angle_change
+          angle_change
     end
 
   end
