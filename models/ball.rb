@@ -51,7 +51,8 @@ class Ball
     #   # @angle = (@angle + 0.5) % 2
     #   angle_change
     # end
-    if (@x >= container.width - var_width)
+    if @y > paddle.y + paddle.height
+    elsif (@x >= container.width - var_width)
       @x = container.width - var_width
       angle_change
     elsif (@y <= 0)
