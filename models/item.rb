@@ -70,7 +70,7 @@ class Item
   end
 
   def random_item_method
-    items = ["paddle_speed_up", "paddle_speed_down", "ball_slow_down", "ball_speed_up", "extra_ball", "paddle_switch", "paddle_extend", "paddle_shorten"]
+    items = ["megaball", "bigger_ball", "smaller_ball", "paddle_speed_up", "paddle_speed_down", "ball_slow_down", "ball_speed_up", "extra_ball", "paddle_switch", "paddle_extend", "paddle_shorten"]
     # items = ["shooter"]
     item = items.sample
     self.send(item)
@@ -122,6 +122,28 @@ class Item
   def paddle_shorten
     if paddle.var_width >= 70
       paddle.var_width *= 0.7
+    end
+  end
+
+  def megaball
+    balls.each {|ball| ball.megaball = true}
+  end
+
+  def bigger_ball
+    balls.each do |ball|
+      if ball.var_width <= 40
+        ball.var_width *= 1.2
+        ball.var_height *= 1.2
+      end
+    end
+  end
+
+  def smaller_ball
+    balls.each do |ball|
+      if ball.var_width >= 20
+        ball.var_width *= 0.8
+        ball.var_height *= 0.8
+      end
     end
   end
 
