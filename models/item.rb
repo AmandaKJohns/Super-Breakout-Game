@@ -11,7 +11,8 @@ class Item
   ALL_ITEMS = []
 
   def initialize(game)
-    @image = Image.new('./assets/images/mushroom.gif')
+    # @image = Image.new('./assets/images/mushroom.gif')
+    @image = Image.new('./assets/images/jeffitem.png')
     @game = game
     @state = true
     reset

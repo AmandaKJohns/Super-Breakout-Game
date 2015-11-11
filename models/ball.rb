@@ -32,6 +32,8 @@ class Ball
     @y = 400
     @var_width = width
     @var_height = height
+    # @var_width = 60 # for jeffball
+    # @var_height = 60 # for jeffball
     @megaball = false
     @speed = 0.4
     # @angle = 0.25
