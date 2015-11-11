@@ -31,6 +31,7 @@ class Block
             level.blocks.delete(self)
       end
     end
+
   end
 
 end

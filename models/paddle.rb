@@ -36,6 +36,7 @@ class Paddle
     if input.is_key_down(key_right) and @x < container.width - width
       @x += speed * delta
     end
+    
   end
 
 end

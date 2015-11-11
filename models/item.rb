@@ -50,7 +50,7 @@ class Item
         # Item.item_generation(@game)
     end
 
-    shooter(input)
+    # shooter(input)
 
     if @y + height > paddle.y + 50
       @state = false
@@ -58,11 +58,11 @@ class Item
 
   end
 
-  def shooter(input)
-    if input.is_key_pressed(Input::KEY_SPACE)
-      Bullet.new(@game)
-    end
-  end
+  # def shooter(input)
+  #   if input.is_key_pressed(Input::KEY_SPACE)
+  #     Bullet.new(@game)
+  #   end
+  # end
 
 
   def format_message(item)
@@ -102,12 +102,6 @@ class Item
       paddle.key_right =Input::KEY_RIGHT
     end
   end
-
-  # def shooter(input)
-  #   if input.is_key_down(Input::KEY_SPACE)
-  #     Bullet.new(@game)
-  #   end
-  # end
 
   def extra_ball
     Ball.new(game)

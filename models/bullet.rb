@@ -4,7 +4,7 @@ class Bullet
   attr_accessor :x, :y, :game
 
   def_delegators :@image, :width, :height
-  def_delegators :game, :paddle, :blocks
+  def_delegators :game, :paddle, :blocks, :level
 
   ALL_BULLETS = []
 
@@ -41,8 +41,7 @@ class Bullet
           x <= (block.x + block.width) && 
           y >= block.y && 
           y <= (block.y + block.height)
-            block.x = 800
-            block.y = 800
+            level.blocks.delete(block)
             self.x = 800
             self.y = 800
       end

@@ -30,6 +30,8 @@ class PongGame < BasicGame
     @level = Level.new(self)
     @lives = 3
     @delta = 0
+    @item = Item.new(self) # adding item here so it doesnt lag later when first item is generated
+    @item.x = 800
   end
 
   def update(container, delta)
@@ -43,10 +45,17 @@ class PongGame < BasicGame
     # if delta.to_i % 18 == 0
     #   Item.new(self)
     # end
+    if input.is_key_pressed(Input::KEY_SPACE)
+      Bullet.new(self)
+    end
     @delta = @delta + delta
     if @delta >= 7000
       Item.new(self)
       @delta = 0
+    end
+
+    if blocks.empty?
+      you_won(container)
     end
 
   end
@@ -74,7 +83,12 @@ class PongGame < BasicGame
   end
 
   def game_over(container)
-    JOptionPane.show_message_dialog(nil, "Game Over")
+    JOptionPane.show_message_dialog(nil, "Game Over!")
+    container.exit
+  end
+
+  def you_won(container)
+    JOptionPane.show_message_dialog(nil, "You Won!")
     container.exit
   end
 
