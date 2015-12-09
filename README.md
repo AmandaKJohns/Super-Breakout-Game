@@ -2,11 +2,9 @@
 
 Built as meetup group project at Flatiron School with Korey Aaronson
 
-A version of the classic game Super Breakout written in JRuby to leverage Java classes and functionality for game development
+A JRuby version of the classic game Super Breakout 
 
-To Play
-
-* clone the repo
+To play, clone the repo and run the following commands.
 
 ```
 rvm install jruby
