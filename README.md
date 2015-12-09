@@ -1,4 +1,4 @@
-== Super Breakout Game
+#Super Breakout Game
 
 Built as meetup group project at Flatiron School with Korey Aaronson
 
